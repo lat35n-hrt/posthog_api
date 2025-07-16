@@ -10,9 +10,6 @@ __pycache__/
 *.pyc
 .vscode/
 
-
-
->>>>>>> 4d56f2a (Initial commit: PostHog API demo)
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
