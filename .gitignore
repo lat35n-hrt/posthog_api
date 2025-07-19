@@ -9,6 +9,7 @@ working_*.py
 __pycache__/
 *.pyc
 .vscode/
+*.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -227,3 +228,4 @@ __marimo__/
 =======
 __marimo__/
 >>>>>>> 4d56f2a (Initial commit: PostHog API demo)
+fonts/*.ttf
