@@ -108,3 +108,42 @@ This project uses two different API keys:
 
 All secrets are loaded from the .env file using python-dotenv.
 Make sure to avoid pushing real API keys to GitHub.
+
+
+
+## PDF Generation (Report Export)
+
+You can generate a simple PDF report of the retrieved events using [fpdf2](https://github.com/PyFPDF/fpdf2).
+
+### Prerequisites
+Make sure the following environment variables are configured in your `.env` file:
+
+CSV_INPUT_PATH=./data/sample_events.csv
+PDF_FILENAME_BASE=fpdf_output
+FONT_PATH=./fonts/NotoSansJP-Regular.ttf
+FONT_NAME=NotoSans
+
+
+These are also documented in `.env.example`.
+
+### Run the Script
+
+Use the script below to convert the CSV data to a formatted PDF:
+
+```bash
+python generate_report.py
+```
+
+Output
+The generated PDF will be saved in the specified directory with a name like:
+
+
+fpdf_output_20250719_232654.pdf
+
+fpdf2 was chosen for its Unicode compatibility, especially for generating multilingual PDF reports.
+In this project, we used NotoSansJP-Regular.ttf to verify Japanese language support.
+
+Make sure the TTF font file (e.g. NotoSansJP-Regular.ttf) exists at the specified path.
+
+⚠️ The font file is not included in the repository. You can download it from:
+https://fonts.google.com/noto/specimen/Noto+Sans+JP
