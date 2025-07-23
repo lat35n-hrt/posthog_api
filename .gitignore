@@ -1,8 +1,9 @@
 # Exclude output files
-output/**/*.pdf
+output/
 
 # Ensure the output/ directory exists
 !output/
+!output/.gitkeep
 
 # font files
 fonts/*.ttf
