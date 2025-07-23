@@ -1,4 +1,6 @@
 # Exclude output files
+output/**/*.csv
+output/**/*.pdf
 output/
 
 # Ensure the output/ directory exists
