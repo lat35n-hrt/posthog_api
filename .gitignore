@@ -1,3 +1,9 @@
+# Exclude output files
+output/**/*.pdf
+
+# Ensure the output/ directory exists
+!output/
+
 # font files
 fonts/*.ttf
 
