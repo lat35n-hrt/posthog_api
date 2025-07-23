@@ -147,3 +147,31 @@ Make sure the TTF font file (e.g. NotoSansJP-Regular.ttf) exists at the specifie
 
 ⚠️ The font file is not included in the repository. You can download it from:
 https://fonts.google.com/noto/specimen/Noto+Sans+JP
+
+
+## 📧 Email PDF Report
+This project includes a feature to send the generated PDF report as an email attachment.
+
+### 🔧 Configuration
+
+### Email Configuration
+EMAIL_ADDRESS=your_email@gmail.com           # Sender address
+EMAIL_PASSWORD=your_app_password             # App password (Gmail)
+EMAIL_TO=recipient_email@example.com         # Recipient address
+PDF_PATH=./output/fpdf_output.pdf            # Path to the PDF file
+SMTP_SERVER=smtp.gmail.com                   # SMTP server (default for Gmail)
+SMTP_PORT=465                                # Port for SSL (Gmail default)
+EMAIL_SUBJECT=Your PDF Report
+EMAIL_BODY=Please find the attached PDF report.
+✅ Ensure that App Passwords are enabled if you're using Gmail with 2-step verification.
+
+### 🚀 Send the Email
+Run the following command to send the email:
+
+````bash
+python send_email.py
+````
+
+You should see a message like:
+
+✅ Email sent successfully.
