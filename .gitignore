@@ -1,6 +1,4 @@
 # Exclude output files
-output/**/*.csv
-output/**/*.pdf
 output/
 
 # Ensure the output/ directory exists
@@ -21,6 +19,7 @@ __pycache__/
 *.pyc
 .vscode/
 *.pdf
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
