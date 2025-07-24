@@ -1,177 +1,85 @@
+# PostHog Event Automation Tool
 
+## 📌 Overview
+This tool automates the following steps:
+1. Fetch events from PostHog API
+2. Save data as CSV
+3. Generate a multilingual PDF report using fpdf2
+4. Send the report via email
 
-## PostHog API Integration (Event Sender & Getter)
+Built for demo and portfolio purposes.
 
-
-
-## Objective
-
-
-
-To demonstrate how to integrate with the PostHog API using Python for both sending (POST) and retrieving (GET) events.
-
-This serves as a simple learning or portfolio project, using .env for safe configuration management and pandas for light analysis.
-
-
-
-## Project Structure
-
-
-
-````bash
-
-├── posthog_post_event.py # Sends a test event to PostHog
-
-├── posthog_get_events_pandas.py # Retrieves and filters events from PostHog
-
-├── .env # (ignored) API keys and settings
-
-├── .env.example # Example environment config
-
-├── requirements.txt # Python dependencies
-
-````
-
-
-
-## Setup
-
-1. Clone this repository
-````bash
-git clone https://github.com/lat35n-hrt/posthog_api.git
-cd posthog_api_demo
-````
-
-2. Create a .env file
-Use the provided .env.example and fill in your PostHog credentials:
-
-```` bash
-cp .env.example .env
-````
-
-3.   Install dependencies
-(Use a virtual environment if preferred.)
-
-````bash
-pip install -r requirements.txt
-````
-
-
-
-##  Usage
-
-- Send an Event
-
-- Sends a test event (e.g., "manual_api_test") to PostHog.
-
-
-```` bash
-python posthog_post_event.py
-````
-
-
-
-You should receive a response like:
-
-
-
-```` jspn
-200
-{"status":"ok"}
-````
-
-
-##  Retrieve Events
-
-Fetches recent events and filters them using pandas.
-
-```` bash
-python posthog_get_events_pandas.py
-````
-
-
-Expected output (if events exist):
-
-
-
-````cssharp
-timestamp distinct_id event
-0 2025-07-16T03:05:55.68Z user_001 manual_api_test
-````
-
-
-##  Notes
-
-This project uses two different API keys:
-- POSTHOG_API_KEY for sending events
-- POSTHOG_PERSONAL_API_KEY for fetching data
-
-All secrets are loaded from the .env file using python-dotenv.
-Make sure to avoid pushing real API keys to GitHub.
-
-
-
-## PDF Generation (Report Export)
-
-You can generate a simple PDF report of the retrieved events using [fpdf2](https://github.com/PyFPDF/fpdf2).
-
-### Prerequisites
-Make sure the following environment variables are configured in your `.env` file:
-
-CSV_INPUT_PATH=./data/sample_events.csv
-PDF_FILENAME_BASE=fpdf_output
-FONT_PATH=./fonts/NotoSansJP-Regular.ttf
-FONT_NAME=NotoSans
-
-
-These are also documented in `.env.example`.
-
-### Run the Script
-
-Use the script below to convert the CSV data to a formatted PDF:
-
+## 🗂 Project Structure
 ```bash
-python generate_report.py
+├── run_all.py                  # Main orchestration script
+├── posthog_get_events_pandas.py
+├── generate_report.py
+├── send_email.py
+├── .env                        # Your environment config
+├── .env.example                # Template for environment config
+├── output/                     # CSV/PDF output (excluded from Git)
+├── examples/                   # Standalone scripts (see README_example.md)
+
 ```
 
-Output
-The generated PDF will be saved in the specified directory with a name like:
+## ⚙️ Setup
+
+1. Clone Repository
+```bash
+git clone https://github.com/lat35n-hrt/posthog_api.git
+cd posthog_api
+```
+
+2. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Configure .env
+Use .env.example as a starting point:
+
+```bash
+cp .env.example .env
+```
+
+Set the following values:
+
+API Keys: POSTHOG_API_KEY, POSTHOG_PERSONAL_API_KEY
+
+Email Settings: EMAIL_ADDRESS, EMAIL_PASSWORD, TO_ADDRESS
+
+Font & Output: FONT_PATH, PDF_PATH, etc.
+
+⚠️ Font not included. Download NotoSansJP from Google Fonts
+
+## 🚀 Run All Steps
+```bash
+python run_all.py
+```
+
+Expected steps:
+
+✅ CSV created: ./output/events_yyyymmdd_hhmmss.csv
+
+📄 PDF generated: ./output/report_yyyymmdd_hhmmss.pdf
+
+📧 Email sent with PDF attached
 
 
-fpdf_output_20250719_232654.pdf
-
-fpdf2 was chosen for its Unicode compatibility, especially for generating multilingual PDF reports.
-In this project, we used NotoSansJP-Regular.ttf to verify Japanese language support.
-
-Make sure the TTF font file (e.g. NotoSansJP-Regular.ttf) exists at the specified path.
-
-⚠️ The font file is not included in the repository. You can download it from:
-https://fonts.google.com/noto/specimen/Noto+Sans+JP
-
-
-## 📧 Email PDF Report
-This project includes a feature to send the generated PDF report as an email attachment.
-
-### 🔧 Configuration
-
-### Email Configuration
-EMAIL_ADDRESS=your_email@gmail.com           # Sender address
-EMAIL_PASSWORD=your_app_password             # App password (Gmail)
-EMAIL_TO=recipient_email@example.com         # Recipient address
-PDF_PATH=./output/fpdf_output.pdf            # Path to the PDF file
-SMTP_SERVER=smtp.gmail.com                   # SMTP server (default for Gmail)
-SMTP_PORT=465                                # Port for SSL (Gmail default)
-EMAIL_SUBJECT=Your PDF Report
-EMAIL_BODY=Please find the attached PDF report.
-✅ Ensure that App Passwords are enabled if you're using Gmail with 2-step verification.
-
-### 🚀 Send the Email
-Run the following command to send the email:
+## 🧪 For Standalone Feature Testing
+Use scripts in examples/ for unit-level testing:
 
 ````bash
-python send_email.py
+cd examples/
+python send_email_example.py
 ````
 
-You should see a message like:
+More details: examples/README_example.md
 
-✅ Email sent successfully.
+## 📎 Notes
+.gitignore excludes output/, *.csv and *.pdf
+
+Designed for learning, demo, and reproducible reporting
+
+Easy to expand: plug-in style architecture
