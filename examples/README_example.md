@@ -15,12 +15,12 @@ Each script runs independently and uses mock data or `.env` settings.
 
 ```bash
 examples/
-├── posthog_post_event.py         # Send a test event
-├── posthog_get_events_pandas.py # Retrieve and filter events
-├── generate_pdf_simple.py       # Convert CSV data to PDF
-├── send_email_example.py        # Send the generated PDF by email
-├── .env.example                 # Sample environment settings
-└── README_example.md            # (This file)
+├── posthog_post_event_example.py        # Send a test event
+├── posthog_get_events_pandas_example.py # Retrieve and filter events
+├── generate_report_example.py           # Convert CSV data to PDF
+├── send_email_example.py                # Send the generated PDF by email
+├── .env.example                         # Sample environment settings
+└── README_example.md                    # (This file)
 ```
 
 ⚙️ Setup
@@ -42,20 +42,25 @@ POSTHOG_HOST=https://app.posthog.com
 
 # Email
 EMAIL_ADDRESS=your_email@gmail.com
+
 EMAIL_PASSWORD=your_app_password
+
 TO_ADDRESS=recipient@example.com
 
 # PDF
 FONT_PATH=./fonts/NotoSansJP-Regular.ttf
+
 FONT_NAME=NotoSans
-PDF_PATH=./output/fpdf_output.pdf
+
+PDF_PATH=./output/report.pdf
+
 ⚠️ Do not commit .env to GitHub.
 
 ▶️ 1. Send Event to PostHog
 Sends a test event with mock distinct_id and action.
 
 ````bash
-python posthog_post_event.py
+python posthog_post_event_example.py
 ````
 
 Expected result:
