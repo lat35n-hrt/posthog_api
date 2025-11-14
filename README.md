@@ -83,3 +83,19 @@ More details: examples/README_example.md
 Designed for learning, demo, and reproducible reporting
 
 Easy to expand: plug-in style architecture
+
+
+
+## 📸 Screenshots
+1. Triggering the PDF generation & email delivery
+
+Below is the exact command execution that triggers the PostHog → PDF → Mail pipeline.
+
+![Email Demo](img/cli_demo.png)
+
+
+2. Delivered email with PDF attachment
+
+The system successfully delivered the generated PDF to the test mailbox.
+
+![Email Demo](img/sendmail_success.png)
