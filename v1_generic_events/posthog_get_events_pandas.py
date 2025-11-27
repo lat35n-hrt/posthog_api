@@ -1,3 +1,4 @@
+from asyncio import events
 from dotenv import load_dotenv
 import os
 import requests
@@ -21,11 +22,13 @@ def fetch_and_save_csv(csv_path: str):
     }
 
     params = {
-        "limit": 10  # latest 10 events
+        "limit": 500  # latest 500 events
     }
 
     response = requests.get(url, headers=headers, params=params)
     events = response.json().get("results", [])
+
+    print("Fetched event names:", [e.get("event") for e in events])
 
     filtered = [e for e in events if e["event"] == filter_event]
 
@@ -38,3 +41,6 @@ def fetch_and_save_csv(csv_path: str):
     # Save CSV
     df[["timestamp", "distinct_id", "event"]].to_csv(csv_path, index=False)
     print(f"✅ Events saved to CSV: {csv_path}")
+
+if __name__ == "__main__":
+    fetch_and_save_csv("debug_events.csv")

@@ -7,12 +7,19 @@ from datetime import datetime
 
 load_dotenv()
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Script directory
+OUTPUT_DIR = os.path.join(BASE_DIR, "output")
+
+# Ensure output directory exists
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
 # ENV
 EMAIL_SUBJECT = os.getenv("EMAIL_SUBJECT", "Your PDF Report")
 EMAIL_BODY = os.getenv("EMAIL_BODY", "Please find the attached PDF report.")
 # csv_path = os.getenv("CSV_PATH", "./output/events.csv") # A default path is used for a unit test in send_enail.py only.
 # pdf_path = os.getenv("PDF_PATH", "./output/report.pdf") # A default path is used for a unit test in send_enail.py only.
-FONT_PATH = os.getenv("FONT_PATH", "./fonts/NotoSansJP-Regular.ttf")
+REL_FONT_PATH = os.getenv("FONT_PATH", "fonts/NotoSansJP-Regular.ttf")
+FONT_PATH = os.path.join(BASE_DIR, REL_FONT_PATH)
 FONT_NAME = os.getenv("FONT_NAME", "NotoSans")
 
 # Date and Time
@@ -21,8 +28,8 @@ current_date_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 # Construct filenames with the date
 csv_filename = f"events_{current_date_time}.csv"
 pdf_filename = f"report_{current_date_time}.pdf"
-CSV_PATH = os.path.join(os.getenv("OUTPUT_DIR", "./output"), csv_filename)
-PDF_PATH = os.path.join(os.getenv("OUTPUT_DIR", "./output"), pdf_filename)
+CSV_PATH = os.path.join(OUTPUT_DIR, csv_filename)
+PDF_PATH = os.path.join(OUTPUT_DIR, pdf_filename)
 
 # 1. fetch data save csv
 print("📡 Fetching data from PostHog API and saving to CSV...")
