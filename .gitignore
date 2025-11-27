@@ -6,7 +6,7 @@ output/
 !output/.gitkeep
 
 # font files
-fonts/*.ttf
+*.ttf
 
 # exclude working files
 work/
