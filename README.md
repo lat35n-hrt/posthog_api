@@ -63,6 +63,10 @@ cd sandbox/
 python send_email_example.py
 ````
 
+The `sandbox/` directory contains early standalone scripts created before
+extracting the stable v1 pipeline. It is not part of the main workflow.
+
+
 More details: sandbox/README_example.md
 
 ## 📎 Notes
