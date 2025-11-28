@@ -99,3 +99,41 @@ Below is the exact command execution that triggers the PostHog → PDF → Mail 
 The system successfully delivered the generated PDF to the test mailbox.
 
 ![Email Demo](img/sendmail_success.png)
+
+
+## v1 Directory Split and Path Stability Notes
+
+To prepare for the production-oriented implementation (v2), the project has been reorganized so that the
+initial Proof-of-Concept (v1) is kept isolated under its own directory:
+
+```bash
+posthog_api/
+├── v1_generic_events/ # PoC: basic PostHog → CSV → PDF → Email pipeline
+├── v2_blog/ # Production-oriented blog integration (in progress)
+└── ...
+```
+
+The goal of the v1 split is:
+
+- to verify the minimal functional pipeline in a clean, controlled environment
+- to prevent early v2 development from being affected by PoC-level experimental code
+- to ensure the path behavior is stable when executed from different environments
+  (local CLI, cron, CI, or future server-side execution)
+
+# Developer notes
+
+After moving run_all.py and related scripts into v1_generic_events/,
+the original relative FONT_PATH (./fonts/...) no longer resolved correctly
+when executing from the project root.
+
+This fix ensures FONT_PATH is constructed as:
+
+    BASE_DIR + REL_FONT_PATH
+
+allowing both:
+  - `cd v1_generic_events && python run_all.py`
+  - `python v1_generic_events/run_all.py`
+
+to work reliably without modifying existing .env values or directory structure.
+
+This is a minimal and safe fix that restores original behavior.
