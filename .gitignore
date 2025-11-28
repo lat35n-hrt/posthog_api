@@ -1,5 +1,6 @@
 # Exclude output files
 output/
+**/output/
 
 # Ensure the output/ directory exists
 !output/
