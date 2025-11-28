@@ -30,6 +30,8 @@ Examples that produced different results:
 ```bash
 cd project_root && python v1_generic_events/run_all.py
 cd v1_generic_events && python run_all.py
+```
+
 → In the first case, ./fonts pointed to project_root/fonts
 → In the second case, it pointed to v1_generic_events/fonts
 
