@@ -14,7 +14,7 @@ Each script runs independently and uses mock data or `.env` settings.
 ## 📁 Directory Structure
 
 ```bash
-examples/
+sandbox/
 ├── posthog_post_event_example.py        # Send a test event
 ├── posthog_get_events_pandas_example.py # Retrieve and filter events
 ├── generate_report_example.py           # Convert CSV data to PDF

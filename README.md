@@ -9,18 +9,6 @@ This tool automates the following steps:
 
 Built for demo and portfolio purposes.
 
-## 🗂 Project Structure
-```bash
-├── run_all.py                  # Main orchestration script
-├── posthog_get_events_pandas.py
-├── generate_report.py
-├── send_email.py
-├── .env                        # Your environment config
-├── .env.example                # Template for environment config
-├── output/                     # CSV/PDF output (excluded from Git)
-├── examples/                   # Standalone scripts (see README_example.md)
-
-```
 
 ## ⚙️ Setup
 
@@ -68,14 +56,14 @@ Expected steps:
 
 
 ## 🧪 For Standalone Feature Testing
-Use scripts in examples/ for unit-level testing:
+Use scripts in sandbox/ for unit-level testing:
 
 ````bash
-cd examples/
+cd sandbox/
 python send_email_example.py
 ````
 
-More details: examples/README_example.md
+More details: sandbox/README_example.md
 
 ## 📎 Notes
 .gitignore excludes output/, *.csv and *.pdf
