@@ -11,6 +11,7 @@ output/
 
 # exclude working files
 work/
+**/work/
 working_*.py
 
 # Added manually + merged with GitHub initial version and local version
