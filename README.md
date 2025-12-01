@@ -202,3 +202,10 @@ Therefore, all PostHog events contain:
 ```
 
 Because of this, the pipeline keeps the column internally but hides it from the final report until the snippet is updated to send titles explicitly.
+
+
+## v2 Blog Analytics Report
+
+The v2_blog pipeline generates a consolidated analytics report (CSV + PDF) using PostHog page-view data.
+
+![PDF Sample](img/v2_blog_analytics_report.png)
