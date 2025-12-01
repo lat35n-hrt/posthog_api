@@ -12,7 +12,7 @@ def fetch_and_save_csv(csv_path: str):
     api_key = os.getenv("POSTHOG_PERSONAL_API_KEY")
     host = os.getenv("POSTHOG_HOST")
     project_id = os.getenv("POSTHOG_PROJECT_ID")
-    url = f"{host}/api/projects/{project_id}/events"
+    api_events_url = f"{host}/api/projects/{project_id}/events"
     filter_event = os.getenv("POSTHOG_FILTER_EVENT")
 
     if not all([api_key, project_id, host]):
@@ -26,7 +26,7 @@ def fetch_and_save_csv(csv_path: str):
         "limit": 500  # latest 500 events
     }
 
-    response = requests.get(url, headers=headers, params=params)
+    response = requests.get(api_events_url, headers=headers, params=params)
     events = response.json().get("results", [])
 
     print("Fetched event names:", [e.get("event") for e in events])
@@ -51,7 +51,6 @@ def fetch_and_save_csv(csv_path: str):
     df['referrer'] = df['properties'].apply(
     lambda x: x.get('$referrer', 'N/A') if isinstance(x, dict) else 'N/A')
 
-    # v2_blog enhancement: add more columns
     df[["timestamp", "distinct_id", "event", "url", "referrer"]].to_csv(csv_path, index=False)
 
     print(f"✅ Events saved to CSV: {csv_path}")
