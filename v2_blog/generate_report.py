@@ -38,16 +38,15 @@ def generate_pdf_from_csv(csv_path: str, pdf_path: str, font_path: str, font_nam
             # col_width = self.epw / len(df.columns)  # equal column width
             # Custom column widths (total should be ~190mm for A4)
             col_widths = {
-                'timestamp': 32,      # 35 → 32
-                'event': 20,          # 25 → 20
-                'url': 55,            # 60 → 55
-                'title': 35,          # 40 → 35
-                'referrer': 35        # 40 → 35
+                'timestamp': 35,      # 35 → 32 →  35
+                'event': 25,          # 25 → 20 → 25
+                'url': 80,            # 60 → 55 → 60 → 80
+                'referrer': 40        # 40 → 35 → 40
             }
 
 
             # Define column order (exclude distinct_id)
-            display_columns = ['timestamp', 'event', 'url', 'title', 'referrer']
+            display_columns = ['timestamp', 'event', 'url', 'referrer']
 
             # Filter to only display columns that exist in the DataFrame
             columns = [col for col in display_columns if col in df.columns]
