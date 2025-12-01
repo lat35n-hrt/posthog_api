@@ -129,3 +129,76 @@ allowing both:
 to work reliably without modifying existing .env values or directory structure.
 
 This is a minimal and safe fix that restores original behavior.
+
+
+# v2_blog: Hugo Blog Access Tracking Pipeline
+
+The v2_blog/ directory contains the second-stage implementation of this project, focused on tracking page access events from a Hugo-generated blog using PostHog.
+
+## Purpose
+
+Track real blog access events (pageviews, page leaves, autocapture, etc.)
+
+Export recent events to CSV
+
+Generate a PDF access report
+
+Send the report via email for monitoring or personal analytics
+
+Reuse the same .env configuration used by v1_generic_events/
+
+This version is intended for real-world usage with your Hugo blog in production.
+
+## How the blog tracking works
+
+Your Hugo site includes a PostHog snippet injected into the HTML template.
+This snippet collects page-level events such as:
+
+$pageview
+
+$pageleave
+
+$autocapture
+
+These events include useful properties like:
+
+$current_url
+
+$referrer
+
+(Optional) $title — but my current snippet does not send it, which is why the title column remains empty.
+
+## Event filtering (same .env shared across v1 / v2 / sandbox)
+
+The same .env is used across:
+
+```bash
+sandbox/
+v1_generic_events/
+v2_blog/
+```
+You switch the active event type manually using:
+
+```python
+#POSTHOG_FILTER_EVENT = test_event
+POSTHOG_FILTER_EVENT = $pageview
+```
+
+This allows:
+
+v1 PoC testing
+→ use test_event or any custom event
+
+v2 blog analytics
+→ use $pageview
+
+## Why the "title" column is hidden
+
+Your Hugo + PostHog snippet currently does not send the $title property.
+Therefore, all PostHog events contain:
+
+```python
+"title": ""
+```
+
+Because of this, the pipeline keeps the column internally but hides it from the final report until the snippet is updated to send titles explicitly.
