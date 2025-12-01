@@ -1,3 +1,4 @@
+# v2_blog/generate_report.py
 # Installed fpdf2
 from dotenv import load_dotenv
 from fpdf import FPDF
@@ -38,15 +39,15 @@ def generate_pdf_from_csv(csv_path: str, pdf_path: str, font_path: str, font_nam
             # col_width = self.epw / len(df.columns)  # equal column width
             # Custom column widths (total should be ~190mm for A4)
             col_widths = {
-                'timestamp': 35,      # 35 → 32 →  35
-                'event': 25,          # 25 → 20 → 25
-                'url': 80,            # 60 → 55 → 60 → 80
-                'referrer': 40        # 40 → 35 → 40
+                'Timestamp': 35,      # 35 → 32 →  35
+                'Event': 25,          # 25 → 20 → 25
+                'URL': 80,            # 60 → 55 → 60 → 80
+                'Referrer': 40        # 40 → 35 → 40
             }
 
 
             # Define column order (exclude distinct_id)
-            display_columns = ['timestamp', 'event', 'url', 'referrer']
+            display_columns = ['Timestamp', 'Event', 'URL', 'Referrer']
 
             # Filter to only display columns that exist in the DataFrame
             columns = [col for col in display_columns if col in df.columns]
@@ -63,7 +64,7 @@ def generate_pdf_from_csv(csv_path: str, pdf_path: str, font_path: str, font_nam
                     value = str(row[col])
 
                     # Format timestamp to be more readable
-                    if col == 'timestamp' and 'T' in value:
+                    if col == 'Timestamp' and 'T' in value:
                         # Convert "2025-11-27T11:21:22.930000+00:00" to "2025-11-27 11:21"
                         try:
                             dt = pd.to_datetime(value)
