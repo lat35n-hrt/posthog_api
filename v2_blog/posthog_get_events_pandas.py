@@ -45,13 +45,13 @@ def fetch_and_save_csv(csv_path: str):
     # v2_blog enhancement: add more columns
     df['url'] = df['properties'].apply(
     lambda x: x.get('$current_url', 'N/A') if isinstance(x, dict) else 'N/A')
-    df['title'] = df['properties'].apply(
-    lambda x: x.get('$title', 'N/A') if isinstance(x, dict) else 'N/A')
+    # df['title'] = df['properties'].apply(
+    # lambda x: x.get('$title', 'N/A') if isinstance(x, dict) else 'N/A')
     df['referrer'] = df['properties'].apply(
     lambda x: x.get('$referrer', 'N/A') if isinstance(x, dict) else 'N/A')
 
     # v2_blog enhancement: add more columns
-    df[["timestamp", "distinct_id", "event", "url", "title", "referrer"]].to_csv(csv_path, index=False)
+    df[["timestamp", "distinct_id", "event", "url", "referrer"]].to_csv(csv_path, index=False)
 
     print(f"✅ Events saved to CSV: {csv_path}")
 
