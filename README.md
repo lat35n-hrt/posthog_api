@@ -208,4 +208,11 @@ Because of this, the pipeline keeps the column internally but hides it from the 
 
 The v2_blog pipeline generates a consolidated analytics report (CSV + PDF) using PostHog page-view data.
 
+Summary section:
+
+![PDF Sample](img/v2_blog_analytics_summary.png)
+
+Table section:
+
 ![PDF Sample](img/v2_blog_analytics_report.png)
+
