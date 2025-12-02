@@ -29,7 +29,7 @@ def fetch_and_save_csv(csv_path: str):
     response = requests.get(api_events_url, headers=headers, params=params)
     events = response.json().get("results", [])
 
-    print("Fetched event names:", [e.get("event") for e in events])
+    # print("Fetched event names:", [e.get("event") for e in events])
 
     filtered = [e for e in events if e["event"] == filter_event]
 
@@ -38,6 +38,9 @@ def fetch_and_save_csv(csv_path: str):
         print(df[["timestamp", "distinct_id", "event"]])
     else:
         print("DataFrame is empty.: {filter_event}")
+
+
+
 
     # Save CSV
     # Original:
@@ -51,7 +54,18 @@ def fetch_and_save_csv(csv_path: str):
     df['referrer'] = df['properties'].apply(
     lambda x: x.get('$referrer', 'N/A') if isinstance(x, dict) else 'N/A')
 
-    #Rename columns
+
+
+    # --- aggregation ---
+    stats = {
+        "unique_users": df['distinct_id'].nunique(),
+        "total_pageviews": len(df),
+        "period_start": df['timestamp'].min(),
+        "period_end": df['timestamp'].max(),
+        "top_pages": df['current_url'].value_counts().head(10)
+    }
+
+    # --- Rename columns for better readability ---
     df.rename(columns={"timestamp": "Timestamp"}, inplace=True)
     df.rename(columns={"distinct_id": "User ID"}, inplace=True)
     df.rename(columns={"event": "Event"}, inplace=True)
@@ -63,6 +77,11 @@ def fetch_and_save_csv(csv_path: str):
     df[["Timestamp", "User ID", "Event", "URL", "Referrer"]].to_csv(csv_path, index=False)
 
     print(f"✅ Events saved to CSV: {csv_path}")
+
+
+
+    #df and stats return to generate additional report
+    return df, stats
 
 
 if __name__ == "__main__":

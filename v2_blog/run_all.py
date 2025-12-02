@@ -1,3 +1,4 @@
+# v2_blog/run_all.py
 import os
 from dotenv import load_dotenv
 from posthog_get_events_pandas import fetch_and_save_csv
@@ -34,11 +35,10 @@ PDF_PATH = os.path.join(OUTPUT_DIR, pdf_filename)
 
 # 1. fetch data save csv
 print("📡 Fetching data from PostHog API and saving to CSV...")
-fetch_and_save_csv(CSV_PATH)
+df,stats = fetch_and_save_csv(CSV_PATH)
 
 # 2. Generate PDF
-print("📄 Reading CSV and generating PDF...")
-generate_pdf_from_csv(CSV_PATH, PDF_PATH, FONT_PATH, FONT_NAME)
+generate_pdf_from_csv(df, stats, CSV_PATH, PDF_PATH, FONT_PATH, FONT_NAME)
 
 # 3. Send Email
 print("📧 Sending email with PDF attached...")

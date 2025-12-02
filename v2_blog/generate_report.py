@@ -9,7 +9,7 @@ from datetime import datetime
 # loading .env file
 load_dotenv()
 
-def generate_pdf_from_csv(csv_path: str, pdf_path: str, font_path: str, font_name: str):
+def generate_pdf_from_csv(df, stats, csv_path: str, pdf_path: str, font_path: str, font_name: str):
 
     # Check files exist
     if not os.path.exists(csv_path):
@@ -89,6 +89,35 @@ def generate_pdf_from_csv(csv_path: str, pdf_path: str, font_path: str, font_nam
     pdf.add_table(df)
 
 
+    # Summary Section
+    pdf.set_font("NotoSans", size=12)
+    pdf.ln(8)
+    pdf.cell(0, 10, "Summary", ln=True)
+
+    pdf.set_font("NotoSans", size=10)
+    pdf.cell(0, 8, f"Unique Users: {stats['unique_users']}", ln=True)
+    pdf.cell(0, 8, f"Total Pageviews: {stats['total_pageviews']}", ln=True)
+    pdf.cell(0, 8, f"Period: {stats['period_start']} → {stats   ['period_end']}", ln=True)
+    pdf.ln(4)
+
+    pdf.cell(0, 8, "Top 10 Pages:", ln=True)
+    for page, count in stats['top_pages'].items():
+        pdf.cell(0, 8, f"{page} — {count} views", ln=True)
+
+
+    # Save PDF
     print(f"Saving to: {pdf_path}")
     pdf.output(pdf_path)
 
+
+
+
+if __name__ == "__main__":
+    # Example usage
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    CSV_PATH = os.path.join(BASE_DIR, "output", "events.csv")
+    PDF_PATH = os.path.join(BASE_DIR, "output", "report.pdf")
+    FONT_PATH = os.path.join(BASE_DIR, "fonts", "NotoSansJP-Regular.ttf")
+    FONT_NAME = "NotoSans"
+
+    generate_pdf_from_csv(CSV_PATH, PDF_PATH, FONT_PATH, FONT_NAME)
