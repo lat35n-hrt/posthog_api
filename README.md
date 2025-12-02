@@ -208,11 +208,31 @@ Because of this, the pipeline keeps the column internally but hides it from the 
 
 The v2_blog pipeline generates a consolidated analytics report (CSV + PDF) using PostHog page-view data.
 
-Summary section:
-
-![PDF Sample](img/v2_blog_analytics_summary.png)
-
-Table section:
+### Table section:
 
 ![PDF Sample](img/v2_blog_analytics_report.png)
 
+
+### Analytics Summary (v2_blog)
+
+The v2_blog version adds a lightweight analytics summary on top of the raw PostHog event export.
+
+After fetching blog page-view events ($pageview), the system computes:
+
+Unique Users
+Number of distinct visitors (distinct_id).
+
+Total Pageviews
+Count of all $pageview events in the selected window.
+
+Period
+First and last timestamps found in the dataset, formatted as
+YYYY-MM-DD HH:MM.
+
+Top Pages
+The most visited URLs (based on $current_url), ranked by frequency.
+
+These metrics appear at the top of the PDF report, followed by the raw event table.
+
+
+![PDF Sample](img/v2_blog_analytics_summary.png)
