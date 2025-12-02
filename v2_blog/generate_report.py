@@ -97,7 +97,17 @@ def generate_pdf_from_csv(df, stats, csv_path: str, pdf_path: str, font_path: st
     pdf.set_font("NotoSans", size=10)
     pdf.cell(0, 8, f"Unique Users: {stats['unique_users']}", ln=True)
     pdf.cell(0, 8, f"Total Pageviews: {stats['total_pageviews']}", ln=True)
-    pdf.cell(0, 8, f"Period: {stats['period_start']} → {stats   ['period_end']}", ln=True)
+
+
+    # Format period dates to match table format
+    try:
+        period_start = pd.to_datetime(stats['period_start']).strftime('%Y-%m-%d %H:%M')
+        period_end = pd.to_datetime(stats['period_end']).strftime('%Y-%m-%d %H:%M')
+    except:
+        period_start = stats['period_start']
+        period_end = stats['period_end']
+
+    pdf.cell(0, 8, f"Period: {period_start} → {period_end}", ln=True)
     pdf.ln(4)
 
     pdf.cell(0, 8, "Top 10 Pages:", ln=True)

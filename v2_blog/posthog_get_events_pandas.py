@@ -1,5 +1,6 @@
 # v2_blog/posthog_get_events_pandas.py
 from asyncio import events
+import string
 from dotenv import load_dotenv
 import os
 import requests
@@ -54,16 +55,25 @@ def fetch_and_save_csv(csv_path: str):
     df['referrer'] = df['properties'].apply(
     lambda x: x.get('$referrer', 'N/A') if isinstance(x, dict) else 'N/A')
 
-
-
     # --- aggregation ---
+    df_temp = df.copy()
+    df_temp['timestamp'] = pd.to_datetime(df_temp['timestamp'])
+
     stats = {
-        "unique_users": df['distinct_id'].nunique(),
-        "total_pageviews": len(df),
-        "period_start": df['timestamp'].min(),
-        "period_end": df['timestamp'].max(),
-        "top_pages": df['current_url'].value_counts().head(10)
+        "unique_users": df_temp['distinct_id'].nunique(),
+        "total_pageviews": len(df_temp),
+        "period_start": df_temp['timestamp'].min().strftime("%Y-%m-%d %H:%M"),
+        "period_end": df_temp['timestamp'].max().strftime("%Y-%m-%d %H:%M"),
+        "top_pages": df_temp['current_url'].value_counts().head(10)
     }
+
+    print("=== Event Statistics ===")
+    print(f"Unique Users: {stats['unique_users']}")
+    print(f"Total Pageviews: {stats['total_pageviews']}")
+    print(f"Period: {stats['period_start']} to {stats['period_end']}")
+    print("Top 10 Pages:")
+    print(stats['top_pages'])
+
 
     # --- Rename columns for better readability ---
     df.rename(columns={"timestamp": "Timestamp"}, inplace=True)
@@ -71,13 +81,12 @@ def fetch_and_save_csv(csv_path: str):
     df.rename(columns={"event": "Event"}, inplace=True)
     df.rename(columns={"current_url": "URL"}, inplace=True)
     df.rename(columns={"referrer": "Referrer"}, inplace=True)
-
     df.rename(columns={"timestamp": "Timestamp"}, inplace=True)
 
+    # Save enhanced CSV
     df[["Timestamp", "User ID", "Event", "URL", "Referrer"]].to_csv(csv_path, index=False)
 
     print(f"✅ Events saved to CSV: {csv_path}")
-
 
 
     #df and stats return to generate additional report
