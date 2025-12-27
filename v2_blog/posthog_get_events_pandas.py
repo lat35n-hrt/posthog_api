@@ -57,7 +57,11 @@ def fetch_and_save_csv(csv_path: str):
 
     # --- aggregation ---
     df_temp = df.copy()
-    df_temp['timestamp'] = pd.to_datetime(df_temp['timestamp'])
+    df_temp['timestamp'] = pd.to_datetime(
+        df_temp['timestamp'],
+        utc=True,           # +00:00 UTC
+        errors="coerce"     # NaT if invalid parsing
+    )
 
     stats = {
         "unique_users": df_temp['distinct_id'].nunique(),
